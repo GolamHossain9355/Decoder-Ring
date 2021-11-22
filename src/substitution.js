@@ -17,13 +17,12 @@ const substitutionModule = (function () {
     }
     let splitted = input.toLowerCase().split("") 
     return splitted.map(letter => {
+      if (letter == " ") return letter
       for (let key in alphabetValue) {
         let substituteLetter = alphabetValue[key]
         if (encode) {
-          if(letter.charCodeAt() > 122 || letter.charCodeAt() < 97) return letter
           if (letter == key) return substituteLetter
         } else {
-          if (letter == " ") return letter
           if (letter == substituteLetter) return key
         }
       }
