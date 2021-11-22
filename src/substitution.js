@@ -6,8 +6,7 @@
 const substitutionModule = (function () {
   function substitution(input, alphabet, encode = true) {
     if (!alphabet || alphabet.length !== 26) return false
-    let uniqueCheck = alphabet.split("").every(letter => alphabet.indexOf(letter) === alphabet.lastIndexOf(letter))
-    if (!uniqueCheck) return false
+    if ((new Set(alphabet).size !== 26)) return false
     const alphabetValue = {
       a: alphabet[0], b: alphabet[1], c: alphabet[2], d: alphabet[3], e: alphabet[4],
       f: alphabet[5], g: alphabet[6], h: alphabet[7], i: alphabet[8], j: alphabet[9],
