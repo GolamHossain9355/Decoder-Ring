@@ -4,51 +4,24 @@
 // of the anonymous function on line 6
 
 const polybiusModule = (function () {
-  let objects = {
-    a: 11, b: 21, c: 31, d: 41, e: 51,
-    f: 12, g: 22, h: 32, i: 42, j: 42,
-    k: 52, l: 13, m: 23, n: 33, o: 43,
-    p: 53, q: 14, r: 24, s: 34, t: 44,
-    u: 54, v: 15, w: 25, x: 35, y: 45,
-    z: 55
-  };
-  function correctSplit(input, encode = true) {
-    if (encode) return input.toLowerCase().split("");
-    if (!encode) return input.toLowerCase().split(" ");
-  }
+  let alphabets =   ["a",'b','c','d','e',"f",'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  let alphabetValues =['11','21','31','41','51','12','22','32','42','42','52','13','23','33','43','53','14','24','34','44','54','15','25','35','45','55']
   function polybius(input, encode = true) {
-    let splitted = correctSplit(input, encode);
-    if (encode) {
-      return splitted
-        .map((letter) => {
-          if (letter === " ") return letter;
-          for (let key in objects) {
-            let numVal = objects[key];
-            if (letter === key) return numVal;
-          }
-        })
-        .join("");
-    } else {
-      if (splitted.join("").length % 2 == 1) return false;
-      return splitted
-        .map((word) => {
-          let dualNumArray = word.match(/.{1,2}/g);
-          let hmm = [];
-          dualNumArray.forEach((num) => {
-            for (let key in objects) {
-              if (num == objects[key]) {
-                if (objects[key] == 42) {
-                  return hmm.push("(i/j)");
-                } else {
-                  hmm.push(key);
-                }
-              }
-            }
-          });
-          return hmm.join("");
-        })
-        .join(" ");
-    }
+    if (!encode && input.split(" ").join("").length % 2 == 1) return false;
+    let splitted = input.toLowerCase().split("");
+    let decoderVal = "";
+    return splitted
+      .map((letter) => {
+        if (letter === " ") return letter;
+        if (decoderVal.length == 2) decoderVal = "";
+        if (encode) return alphabetValues[alphabets.indexOf(letter)];
+        decoderVal += letter;
+        if (decoderVal.length == 2) {
+          if (alphabetValues.indexOf(decoderVal) == 8) return "(i/j)";
+          return alphabets[alphabetValues.indexOf(decoderVal)];
+        }
+      })
+      .join("");
   }
   return {
     polybius,
