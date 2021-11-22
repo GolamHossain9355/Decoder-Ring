@@ -5,8 +5,7 @@
 
 const substitutionModule = (function () {
   function substitution(input, alphabet, encode = true) {
-    if (!alphabet || alphabet.length !== 26) return false;
-    if (new Set(alphabet).size !== 26) return false;
+    if (!alphabet || alphabet.length !== 26 || new Set(alphabet).size !== 26) return false;
     const allAlphabets = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
     const alphabetValue = {};
     allAlphabets.forEach((letter) => {
@@ -15,13 +14,13 @@ const substitutionModule = (function () {
     let splitted = input.toLowerCase().split("");
     return splitted
       .map((letter) => {
-        if (letter == " ") return letter;
+        if (letter === " ") return letter;
         for (let key in alphabetValue) {
           let substituteLetter = alphabetValue[key];
           if (encode) {
-            if (letter == key) return substituteLetter;
+            if (letter === key) return substituteLetter;
           } else {
-            if (letter == substituteLetter) return key;
+            if (letter === substituteLetter) return key;
           }
         }
       })
